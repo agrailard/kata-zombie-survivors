@@ -1,0 +1,90 @@
+# IntelliJ IDEA specific files
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Logs
+*.log
+
+# Windows-specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# System files
+.DS_Store
+Icon?
+.Spotlight-V100
+.Trashes
+
+# Build directories
+/out/
+build/
+
+# Gradle
+.gradle/
+build/
+
+# Maven
+target/
+
+# Temporary files
+*.class
+*.jar
+*.war
+*.ear
+
+# Bytecode and cache
+*.swp
+*.swo
+*.tmp
+*.temp
+*.~*
+
+# Java-specific
+*.class
+*.jar
+*.war
+*.ear
+*.java~
+*.javadoc
+
+# Logs and databases
+*.log
+*.sqlite
+
+# Local IDE config files
+.vscode/
+*.idea/
+*.iml
+
+# Operating System files
+*.bak
+*.tmp
+*.~lock.*
+*.swp
+*.swo
+
+# Temp files created by the OS or tools
+*.pid
+*.seed
+*.pid.lock
+
+# Tool-specific
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# JetBrains Rider
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/httpRequests
+.idea/libraries
+
+# IntelliJ IDEA 2020+ workspace files
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/usage.stats.xml
