@@ -39,4 +39,39 @@ public class DefaultSurvivorFactoryTest {
         Survivor survivor = defaultSurvivorFactory.create("Arsène");
         Assertions.assertEquals(3, survivor.getNumberOfActionsPerTurn());
     }
+
+    @Test
+    public void survivorCanCarryUpToFiveEquipments(){
+        Survivor survivor = defaultSurvivorFactory.create("Ursule");
+        boolean firstEquipmentAdded = survivor.addEquipment(new Object());
+        boolean secondEquipmentAdded = survivor.addEquipment(new Object());
+        boolean thirdEquipmentAdded = survivor.addEquipment(new Object());
+        boolean fourthEquipmentAdded = survivor.addEquipment(new Object());
+        boolean fifthEquipmentAdded = survivor.addEquipment(new Object());
+        boolean sixthEquipmentAdded = survivor.addEquipment(new Object());
+
+        Assertions.assertTrue(firstEquipmentAdded);
+        Assertions.assertTrue(secondEquipmentAdded);
+        Assertions.assertTrue(thirdEquipmentAdded);
+        Assertions.assertTrue(fourthEquipmentAdded);
+        Assertions.assertTrue(fifthEquipmentAdded);
+
+        Assertions.assertFalse(sixthEquipmentAdded);
+
+        Assertions.assertEquals(5, survivor.getAllEquipments().size());
+    }
+
+    @Test
+    public void survivorCanCarryUpToTwoEquipmentsInHand() {
+
+        Survivor survivor = defaultSurvivorFactory.create("Roger");
+        boolean firstEquipmentAdded = survivor.addEquipment(new Object());
+        boolean secondEquipmentAdded = survivor.addEquipment(new Object());
+        survivor.addEquipment(new Object());
+
+        Assertions.assertTrue(firstEquipmentAdded);
+        Assertions.assertTrue(secondEquipmentAdded);
+
+        Assertions.assertEquals(2, survivor.getEquipmentsInHand().size());
+    }
 }
