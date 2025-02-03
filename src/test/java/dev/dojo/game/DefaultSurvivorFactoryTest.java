@@ -1,7 +1,5 @@
-package dev.dojo;
+package dev.dojo.game;
 
-import dev.dojo.game.DefaultSurvivorFactory;
-import dev.dojo.game.Survivor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +19,7 @@ public class DefaultSurvivorFactoryTest {
         Survivor survivor = defaultSurvivorFactory.create("Michel");
         survivor.addWound();
         survivor.addWound();
-        Assertions.assertEquals(false, survivor.isAlive());
+        Assertions.assertFalse(survivor.isAlive());
     }
 
     @Test
@@ -43,12 +41,12 @@ public class DefaultSurvivorFactoryTest {
     @Test
     public void survivorCanCarryUpToFiveEquipments(){
         Survivor survivor = defaultSurvivorFactory.create("Ursule");
-        boolean firstEquipmentAdded = survivor.addEquipment(new Object());
-        boolean secondEquipmentAdded = survivor.addEquipment(new Object());
-        boolean thirdEquipmentAdded = survivor.addEquipment(new Object());
-        boolean fourthEquipmentAdded = survivor.addEquipment(new Object());
-        boolean fifthEquipmentAdded = survivor.addEquipment(new Object());
-        boolean sixthEquipmentAdded = survivor.addEquipment(new Object());
+        boolean firstEquipmentAdded = survivor.addEquipment(new Equipment("Baseball bat"));
+        boolean secondEquipmentAdded = survivor.addEquipment(new Equipment("Frying pan"));
+        boolean thirdEquipmentAdded = survivor.addEquipment(new Equipment("Katana"));
+        boolean fourthEquipmentAdded = survivor.addEquipment(new Equipment("Pistol"));
+        boolean fifthEquipmentAdded = survivor.addEquipment(new Equipment("Bottled Water"));
+        boolean sixthEquipmentAdded = survivor.addEquipment(new Equipment("Molotov"));
 
         Assertions.assertTrue(firstEquipmentAdded);
         Assertions.assertTrue(secondEquipmentAdded);
@@ -65,13 +63,42 @@ public class DefaultSurvivorFactoryTest {
     public void survivorCanCarryUpToTwoEquipmentsInHand() {
 
         Survivor survivor = defaultSurvivorFactory.create("Roger");
-        boolean firstEquipmentAdded = survivor.addEquipment(new Object());
-        boolean secondEquipmentAdded = survivor.addEquipment(new Object());
-        survivor.addEquipment(new Object());
+        boolean firstEquipmentAdded = survivor.addEquipment(new Equipment("Baseball bat"));
+        boolean secondEquipmentAdded = survivor.addEquipment(new Equipment("Frying pan"));
+        survivor.addEquipment(new Equipment("Katana"));
 
         Assertions.assertTrue(firstEquipmentAdded);
         Assertions.assertTrue(secondEquipmentAdded);
 
         Assertions.assertEquals(2, survivor.getEquipmentsInHand().size());
+    }
+
+
+
+    @Test
+    void survivorCanCarryUpToFourEquipmentsWhenWoundedOnce() {
+        Survivor survivor = defaultSurvivorFactory.create("Thierry");
+
+        survivor.addWound();
+
+        Assertions.assertEquals(4, survivor.getNbMaxEquipments());
+    }
+
+    /**
+     * TODO refacto
+     */
+    @Test
+    void survivorShouldDiscardOneEquipmentWhenFiveEquipmentsReachedAndWoundedOnce() {
+        Survivor survivor = defaultSurvivorFactory.create("Waldemar");
+
+        boolean firstEquipmentAdded = survivor.addEquipment(new Equipment("Baseball bat"));
+        boolean secondEquipmentAdded = survivor.addEquipment(new Equipment("Frying pan"));
+        boolean thirdEquipmentAdded = survivor.addEquipment(new Equipment("Katana"));
+        boolean fourthEquipmentAdded = survivor.addEquipment(new Equipment("Pistol"));
+        boolean fifthEquipmentAdded = survivor.addEquipment(new Equipment("Bottled Water"));
+
+        survivor.addWound();
+
+        Assertions.assertEquals(4, survivor.getAllEquipments().size());
     }
 }

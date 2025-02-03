@@ -10,9 +10,9 @@ public class Survivor {
     private boolean isAlive;
     private int numberOfActionsPerTurn;
     private int maxNbWoundBeforeDie;
-    private List<Object> equipmentsInReserve;
-    private int nbMaxEquipments;
-    private List<Object> equipmentsInHand;
+    private List<Equipment> equipmentsInReserve;
+    private int nbMaxEquipmentsDefault;
+    private List<Equipment> equipmentsInHand;
     private int nbMaxEquipmentsInHand;
 
     public void setAlive(boolean alive) {
@@ -50,10 +50,17 @@ public class Survivor {
     public void addWound() {
         if(this.numberOfWounds < getMaxNbWoundBeforeDie()) {
             ++numberOfWounds;
+            if (getAllEquipments().size() > getNbMaxEquipments()){
+                discardEquipment();
+            }
         }
         if(this.numberOfWounds >= getMaxNbWoundBeforeDie()){
             die();
         }
+    }
+
+    private void discardEquipment() {
+        equipmentsInReserve.remove(equipmentsInReserve.size()-1);
     }
 
     private void die() {
@@ -72,23 +79,23 @@ public class Survivor {
         this.maxNbWoundBeforeDie = maxNbWoundBeforeDie;
     }
 
-    public List<Object> getEquipmentsInReserve() {
+    public List<Equipment> getEquipmentsInReserve() {
         if(equipmentsInReserve == null){
             equipmentsInReserve = new ArrayList<>();
         }
         return equipmentsInReserve;
     }
 
-    public void setEquipmentsInReserve(List<Object> equipmentsInReserve) {
+    public void setEquipmentsInReserve(List<Equipment> equipmentsInReserve) {
         this.equipmentsInReserve = equipmentsInReserve;
     }
 
-    public void setNbMaxEquipments(int nbMaxEquipments) {
-        this.nbMaxEquipments = nbMaxEquipments;
+    private void setNbMaxEquipmentsDefault(int nbMaxEquipmentsDefault) {
+        this.nbMaxEquipmentsDefault = nbMaxEquipmentsDefault;
     }
 
     public int getNbMaxEquipments() {
-        return nbMaxEquipments;
+        return nbMaxEquipmentsDefault - this.getNumberOfWounds();
     }
 
 
@@ -99,7 +106,7 @@ public class Survivor {
      * @param equipment the equipment to add
      * @return true if equipment is added, false otherwise
      */
-    public boolean addEquipment(Object equipment) {
+    public boolean addEquipment(Equipment equipment) {
         boolean equipmentAdded = false;
         if(this.getEquipmentsInHand().size() < this.getNbMaxEquipmentsInHand()){
             this.getEquipmentsInHand().add(equipment);
@@ -121,7 +128,7 @@ public class Survivor {
         return allEquipments;
     }
 
-    public List<Object> getEquipmentsInHand() {
+    public List<Equipment> getEquipmentsInHand() {
         if(equipmentsInHand == null){
             equipmentsInHand = new ArrayList<>();
         }
@@ -155,7 +162,7 @@ public class Survivor {
             survivor.setAlive(true);
             survivor.setNumberOfWounds(0);
             survivor.setMaxNbWoundBeforeDie(this.maxNbWoundBeforeDie);
-            survivor.setNbMaxEquipments(this.maxNbEquipments);
+            survivor.setNbMaxEquipmentsDefault(this.maxNbEquipments);
             survivor.setNbMaxEquipmentsInHand(this.maxNbEquipmentsInHand);
             return survivor;
         }

@@ -1,6 +1,5 @@
-package dev.dojo;
+package dev.dojo.game;
 
-import dev.dojo.game.Survivor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,5 +11,4 @@ public class SurvivorTest {
         Survivor survivor = new Survivor.Builder().setName("Jean").build();
         Assertions.assertEquals("Jean", survivor.getName());
     }
-
 }
