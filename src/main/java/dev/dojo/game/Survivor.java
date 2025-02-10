@@ -60,7 +60,11 @@ public class Survivor {
     }
 
     private void discardEquipment() {
-        equipmentsInReserve.remove(equipmentsInReserve.size()-1);
+        if (!equipmentsInReserve.isEmpty()){
+            equipmentsInReserve.remove(equipmentsInReserve.size()-1);
+        }else if (!equipmentsInHand.isEmpty()){
+            equipmentsInHand.remove(equipmentsInHand.size()-1);
+        }
     }
 
     private void die() {
@@ -108,16 +112,16 @@ public class Survivor {
      */
     public boolean addEquipment(Equipment equipment) {
         boolean equipmentAdded = false;
+        if (this.getAllEquipments().size() >= this.getNbMaxEquipments()) {
+            return equipmentAdded;
+        }
         if(this.getEquipmentsInHand().size() < this.getNbMaxEquipmentsInHand()){
-            this.getEquipmentsInHand().add(equipment);
-            equipmentAdded = true;
+            equipmentAdded = this.getEquipmentsInHand().add(equipment);
             return equipmentAdded;
         }
 
-        if(this.getAllEquipments().size() < this.getNbMaxEquipments()){
-            this.getEquipmentsInReserve().add(equipment);
-            equipmentAdded = true;
-        }
+        equipmentAdded = this.getEquipmentsInReserve().add(equipment);
+
         return equipmentAdded;
     }
 

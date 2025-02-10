@@ -84,9 +84,6 @@ public class DefaultSurvivorFactoryTest {
         Assertions.assertEquals(4, survivor.getNbMaxEquipments());
     }
 
-    /**
-     * TODO refacto
-     */
     @Test
     void survivorShouldDiscardOneEquipmentWhenFiveEquipmentsReachedAndWoundedOnce() {
         Survivor survivor = defaultSurvivorFactory.create("Waldemar");
@@ -95,10 +92,12 @@ public class DefaultSurvivorFactoryTest {
         boolean secondEquipmentAdded = survivor.addEquipment(new Equipment("Frying pan"));
         boolean thirdEquipmentAdded = survivor.addEquipment(new Equipment("Katana"));
         boolean fourthEquipmentAdded = survivor.addEquipment(new Equipment("Pistol"));
-        boolean fifthEquipmentAdded = survivor.addEquipment(new Equipment("Bottled Water"));
+        Equipment bottledWater = new Equipment("Bottled Water");
+        boolean fifthEquipmentAdded = survivor.addEquipment(bottledWater);
 
         survivor.addWound();
 
         Assertions.assertEquals(4, survivor.getAllEquipments().size());
+        Assertions.assertFalse(survivor.getAllEquipments().contains(bottledWater));
     }
 }
