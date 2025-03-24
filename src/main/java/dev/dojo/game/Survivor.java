@@ -2,6 +2,7 @@ package dev.dojo.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Survivor {
 
@@ -125,8 +126,8 @@ public class Survivor {
         return equipmentAdded;
     }
 
-    public List<Object> getAllEquipments() {
-        List<Object> allEquipments = new ArrayList<>();
+    public List<Equipment> getAllEquipments() {
+        List<Equipment> allEquipments = new ArrayList<>();
         allEquipments.addAll(this.getEquipmentsInHand());
         allEquipments.addAll(this.getEquipmentsInReserve());
         return allEquipments;
@@ -192,5 +193,12 @@ public class Survivor {
         }
     }
 
-
+    @Override
+    public String toString() {
+        if (!isAlive()) {
+            return getName() +" is dead !";
+        }
+        String s = getName() + " has " + getAllEquipments().stream().map(Equipment::getName).collect(Collectors.joining(", "));
+        return s;
+    }
 }
