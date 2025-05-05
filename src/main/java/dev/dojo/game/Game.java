@@ -1,10 +1,12 @@
 package dev.dojo.game;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Game {
 
+    public static final int NB_XP_GAINED_WHEN_KILL_ZOMBIE = 1;
     private final SurvivorValidator survivorValidator;
     private List<Survivor> survivors;
     private boolean isFinished;
@@ -16,6 +18,10 @@ public class Game {
         this.uiHandler = uiHandler;
         this.isFinished = false;
         turn = 0;
+    }
+
+    public Level getLevel() {
+        return getSurvivors().stream().filter(Survivor::isAlive).map(Survivor::getLevel).max(Comparator.naturalOrder()).orElse(Level.initialLevel());
     }
 
     public List<Survivor> getSurvivors() {
@@ -65,5 +71,9 @@ public class Game {
         uiHandler.interact("Begin of turn " + turn);
 
         getSurvivors().forEach(survivor -> uiHandler.interact(survivor.toString()));
+    }
+
+    public void killZombie(Survivor survivor) {
+        survivor.killZombie(NB_XP_GAINED_WHEN_KILL_ZOMBIE);
     }
 }

@@ -15,6 +15,8 @@ public class Survivor {
     private int nbMaxEquipmentsDefault;
     private List<Equipment> equipmentsInHand;
     private int nbMaxEquipmentsInHand;
+    private int xp;
+    private Level level;
 
     public void setAlive(boolean alive) {
         isAlive = alive;
@@ -148,12 +150,35 @@ public class Survivor {
         return nbMaxEquipmentsInHand;
     }
 
+    public int getXp() {
+        return this.xp;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public void killZombie(int nbXpGained) {
+        gainXp(nbXpGained);
+    }
+
+    private void gainXp(int nbXpGained) {
+        xp += nbXpGained;
+        level = Level.getLevelFromNbXp(xp);
+    }
+
     public static class Builder{
         private String name;
         private int numberOfActionsPerTurn;
         private int maxNbWoundBeforeDie;
         private int maxNbEquipments;
         private int maxNbEquipmentsInHand;
+        private int xp;
+        private Level level;
 
         public Builder setName(String name) {
             this.name = name;
@@ -169,6 +194,8 @@ public class Survivor {
             survivor.setMaxNbWoundBeforeDie(this.maxNbWoundBeforeDie);
             survivor.setNbMaxEquipmentsDefault(this.maxNbEquipments);
             survivor.setNbMaxEquipmentsInHand(this.maxNbEquipmentsInHand);
+            survivor.setXp(xp);
+            survivor.setLevel(level);
             return survivor;
         }
 
@@ -191,6 +218,24 @@ public class Survivor {
             this.maxNbEquipmentsInHand = maxNbEquipmentsInHand;
             return this;
         }
+
+        public Builder setXp(int xp) {
+            this.xp = xp;
+            return this;
+        }
+
+        public Builder setLevel(Level level) {
+            this.level = level;
+            return this;
+        }
+
+        public Level getLevel() {
+            return level;
+        }
+    }
+
+    private void setXp(int xp) {
+        this.xp = xp;
     }
 
     @Override

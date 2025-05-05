@@ -41,7 +41,7 @@ As Survivors overcome zombies, they gain experience.
 - Each Survivor begins with 0 **Experience**.
 - Each Survivor has a current **Level**.
 - Each Survivor begins at Level Blue.
-- Each time the Survivor kills a zombie, they can 1 Experience.
+- Each time the Survivor kills a zombie, they get 1 Experience.
 - Levels consist of (in order): Blue, Yellow, Orange, Red.
     - When a Survivor exceeds 6 Experience, they advance ("level up") to level Yellow.
     - When a Survivor exceeds 18 Experience, they advance to level Orange.
@@ -50,7 +50,7 @@ As Survivors overcome zombies, they gain experience.
 - A Game begins at Level Blue.
 - A Game Level is always equal to the level of the highest living Survivor's Level.
 
-## Step Five : Output
+## Step Five : Output (TODO)
 
 The Game includes a running history of events that have taken place as it has been played. Managing game history is a Game responsibility.
 

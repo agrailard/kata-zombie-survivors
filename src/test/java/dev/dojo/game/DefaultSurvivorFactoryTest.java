@@ -100,4 +100,16 @@ public class DefaultSurvivorFactoryTest {
         Assertions.assertEquals(4, survivor.getAllEquipments().size());
         Assertions.assertFalse(survivor.getAllEquipments().contains(bottledWater));
     }
+
+    @Test
+    void survivorShouldStartWith0Xp() {
+        Survivor survivor = defaultSurvivorFactory.create("Francisco");
+        Assertions.assertEquals(0, survivor.getXp());
+    }
+
+    @Test
+    void survivorShouldStartWithBlueLevel() {
+        Survivor survivor = defaultSurvivorFactory.create("Francisco");
+        Assertions.assertEquals(Level.BLUE, survivor.getLevel());
+    }
 }

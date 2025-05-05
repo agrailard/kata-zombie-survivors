@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class GameTest {
 
     DefaultSurvivorFactory survivorFactory = new DefaultSurvivorFactory();
@@ -35,7 +37,7 @@ public class GameTest {
 
         Game game = new Game(survivorValidatorMock, handlerMock);
 
-        Assertions.assertEquals(0, game.getNumberSurvivors());
+        assertEquals(0, game.getNumberSurvivors());
     }
 
     @Test
@@ -44,8 +46,8 @@ public class GameTest {
         Survivor survivor = survivorFactory.create("Pedro");
 
         game.addSurvivor(survivor);
-        Assertions.assertEquals(1, game.getNumberSurvivors());
-        Assertions.assertEquals("Pedro", game.getSurvivors().get(0).getName());
+        assertEquals(1, game.getNumberSurvivors());
+        assertEquals("Pedro", game.getSurvivors().get(0).getName());
     }
 
     @Test
@@ -55,7 +57,7 @@ public class GameTest {
         Survivor survivor = survivorFactory.create("Pedro");
         game.addSurvivor(survivor);
 
-        Assertions.assertEquals(0, game.getNumberSurvivors());
+        assertEquals(0, game.getNumberSurvivors());
 
     }
 
@@ -69,5 +71,35 @@ public class GameTest {
         game.hurtSurvivor(survivor);
 
         Assertions.assertTrue(game.isFinished());
+    }
+
+    @Test
+    void gameShouldGive1XpToSurvivorWhenKillZombie() {
+        Game game = new Game(survivorValidatorMock, handlerMock);
+
+        Survivor survivor = new Survivor.Builder().setName("Pedro").setMaxNbWoundBeforeDie(1).setXp(0).setLevel(Level.BLUE).build();
+        game.addSurvivor(survivor);
+
+        game.killZombie(survivor);
+
+        assertEquals(1, survivor.getXp());
+    }
+
+    @Test
+    void gameShouldStartAtBlueLevel() {
+        Game game = new Game(survivorValidatorMock, handlerMock);
+
+        assertEquals(Level.BLUE, game.getLevel());
+    }
+
+    @Test
+    void gameLevelShouldBeTheSameAsTheHighestLivingSurvivorLevel() {
+        Game game = new Game(survivorValidatorMock, handlerMock);
+        Survivor survivorPedro = new Survivor.Builder().setName("Pedro").setMaxNbWoundBeforeDie(1).setXp(10).setLevel(Level.YELLOW).build();
+        Survivor survivorPascal = new Survivor.Builder().setName("Pascal").setMaxNbWoundBeforeDie(1).setXp(20).setLevel(Level.ORANGE).build();
+        game.addSurvivor(survivorPedro);
+        game.addSurvivor(survivorPascal);
+
+        assertEquals(Level.ORANGE, game.getLevel());
     }
 }

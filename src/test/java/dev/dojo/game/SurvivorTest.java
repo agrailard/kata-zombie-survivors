@@ -53,4 +53,89 @@ public class SurvivorTest {
         Assertions.assertFalse(thirdEquipmentAdded);
         Assertions.assertEquals(1, survivor.getAllEquipments().size());
     }
+
+    @Test
+    void survivorShouldGetXpWhenKillZombie() {
+        Survivor survivor = new Survivor.Builder()
+                .setName("Michel")
+                .setNumberOfActionsPerTurn(3)
+                .setMaxNbWoundBeforeDie(3)
+                .setMaxNbEquipments(2)
+                .setMaxNbEquipmentsInHand(2)
+                .setXp(0)
+                .setLevel(Level.BLUE)
+                .build();
+
+        survivor.killZombie(1);
+
+        Assertions.assertEquals(1,survivor.getXp());
+    }
+
+    @Test
+    void survivorShouldLevelUpToYellowWhenExceeds6Xp() {
+        Survivor survivor = new Survivor.Builder()
+                .setName("Michel")
+                .setNumberOfActionsPerTurn(3)
+                .setMaxNbWoundBeforeDie(3)
+                .setMaxNbEquipments(2)
+                .setMaxNbEquipmentsInHand(2)
+                .setXp(6)
+                .setLevel(Level.BLUE)
+                .build();
+
+        survivor.killZombie(1);
+
+        Assertions.assertEquals(Level.YELLOW, survivor.getLevel());
+    }
+
+    @Test
+    void survivorShouldLevelUpToOrangeWhenExceeds18Xp() {
+        Survivor survivor = new Survivor.Builder()
+                .setName("Michel")
+                .setNumberOfActionsPerTurn(3)
+                .setMaxNbWoundBeforeDie(3)
+                .setMaxNbEquipments(2)
+                .setMaxNbEquipmentsInHand(2)
+                .setXp(18)
+                .setLevel(Level.YELLOW)
+                .build();
+
+        survivor.killZombie(1);
+
+        Assertions.assertEquals(Level.ORANGE, survivor.getLevel());
+    }
+
+    @Test
+    void survivorShouldLevelUpToRedWhenExceeds42Xp() {
+        Survivor survivor = new Survivor.Builder()
+                .setName("Michel")
+                .setNumberOfActionsPerTurn(3)
+                .setMaxNbWoundBeforeDie(3)
+                .setMaxNbEquipments(2)
+                .setMaxNbEquipmentsInHand(2)
+                .setXp(42)
+                .setLevel(Level.ORANGE)
+                .build();
+
+        survivor.killZombie(1);
+
+        Assertions.assertEquals(Level.RED, survivor.getLevel());
+    }
+
+    @Test
+    void newSurvivorShouldLevelUpToRedWhenGain43Xp() {
+        Survivor survivor = new Survivor.Builder()
+                .setName("Michel")
+                .setNumberOfActionsPerTurn(3)
+                .setMaxNbWoundBeforeDie(3)
+                .setMaxNbEquipments(2)
+                .setMaxNbEquipmentsInHand(2)
+                .setXp(0)
+                .setLevel(Level.BLUE)
+                .build();
+
+        survivor.killZombie(43);
+
+        Assertions.assertEquals(Level.RED, survivor.getLevel());
+    }
 }
