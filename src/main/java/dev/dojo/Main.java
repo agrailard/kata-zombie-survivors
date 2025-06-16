@@ -6,15 +6,7 @@ import dev.dojo.game.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
 
-        UiHandler consoleUiHandler = new UiHandler() {
-            @Override
-            public void interact(String message) {
-                System.out.println(message);
-            }
-        };
 
         SurvivorFactory survivorFactory = new DefaultSurvivorFactory();
 
@@ -28,7 +20,7 @@ public class Main {
         louis.addEquipment(new Equipment("Laser saber"));
         louis.addEquipment(new Equipment("Keys"));
 
-        Game game = new Game(new DefaultSurvivorValidator(), consoleUiHandler);
+        Game game = new Game(new DefaultSurvivorValidator());
         game.addSurvivor(michelle);
         game.addSurvivor(louis);
 

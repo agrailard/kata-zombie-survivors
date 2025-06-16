@@ -35,14 +35,14 @@ public class GameTest {
     @Test
     void aGameShouldBeginWithZeroSurvivor() {
 
-        Game game = new Game(survivorValidatorMock, handlerMock);
+        Game game = new Game(survivorValidatorMock);
 
         assertEquals(0, game.getNumberSurvivors());
     }
 
     @Test
     void shouldBeAbleToAddASurvivor() {
-        Game game = new Game(survivorValidatorMock, handlerMock);
+        Game game = new Game(survivorValidatorMock);
         Survivor survivor = survivorFactory.create("Pedro");
 
         game.addSurvivor(survivor);
@@ -52,7 +52,7 @@ public class GameTest {
 
     @Test
     void shouldNotBeAbleToCreateSurvivorWhenSurvivorIsInvalid(){
-        Game game = new Game(survivorValidatorMockFalse, handlerMock);
+        Game game = new Game(survivorValidatorMockFalse);
 
         Survivor survivor = survivorFactory.create("Pedro");
         game.addSurvivor(survivor);
@@ -63,7 +63,7 @@ public class GameTest {
 
     @Test
     void gameShouldFinishWhenNoMoreSurvivor() {
-        Game game = new Game(survivorValidatorMock, handlerMock);
+        Game game = new Game(survivorValidatorMock);
 
         Survivor survivor = new Survivor.Builder().setName("Pedro").setMaxNbWoundBeforeDie(1).build();
         game.addSurvivor(survivor);
@@ -75,7 +75,7 @@ public class GameTest {
 
     @Test
     void gameShouldGive1XpToSurvivorWhenKillZombie() {
-        Game game = new Game(survivorValidatorMock, handlerMock);
+        Game game = new Game(survivorValidatorMock);
 
         Survivor survivor = new Survivor.Builder().setName("Pedro").setMaxNbWoundBeforeDie(1).setXp(0).setLevel(Level.BLUE).build();
         game.addSurvivor(survivor);
@@ -87,14 +87,14 @@ public class GameTest {
 
     @Test
     void gameShouldStartAtBlueLevel() {
-        Game game = new Game(survivorValidatorMock, handlerMock);
+        Game game = new Game(survivorValidatorMock);
 
         assertEquals(Level.BLUE, game.getLevel());
     }
 
     @Test
     void gameLevelShouldBeTheSameAsTheHighestLivingSurvivorLevel() {
-        Game game = new Game(survivorValidatorMock, handlerMock);
+        Game game = new Game(survivorValidatorMock);
         Survivor survivorPedro = new Survivor.Builder().setName("Pedro").setMaxNbWoundBeforeDie(1).setXp(10).setLevel(Level.YELLOW).build();
         Survivor survivorPascal = new Survivor.Builder().setName("Pascal").setMaxNbWoundBeforeDie(1).setXp(20).setLevel(Level.ORANGE).build();
         game.addSurvivor(survivorPedro);

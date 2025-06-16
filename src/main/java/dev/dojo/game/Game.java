@@ -11,11 +11,9 @@ public class Game {
     private List<Survivor> survivors;
     private boolean isFinished;
     private int turn;
-    private UiHandler uiHandler;
 
-    public Game(SurvivorValidator survivorValidator, UiHandler uiHandler) {
+    public Game(SurvivorValidator survivorValidator) {
         this.survivorValidator = survivorValidator;
-        this.uiHandler = uiHandler;
         this.isFinished = false;
         turn = 0;
     }
@@ -47,7 +45,6 @@ public class Game {
 
     public void finish() {
         isFinished = true;
-        uiHandler.interact("Game over !");
     }
 
     public boolean checkIfAllSurvivorsDied(){
@@ -56,10 +53,6 @@ public class Game {
 
     public void hurtSurvivor(Survivor survivor){
         survivor.addWound();
-        uiHandler.interact(survivor.getName() + " wounded !");
-        if (!survivor.isAlive()) {
-            uiHandler.interact(survivor.getName() + " died !");
-        }
         if (checkIfAllSurvivorsDied()){
             finish();
         }
@@ -67,10 +60,6 @@ public class Game {
 
     public void nextTurn() {
         turn++;
-
-        uiHandler.interact("Begin of turn " + turn);
-
-        getSurvivors().forEach(survivor -> uiHandler.interact(survivor.toString()));
     }
 
     public void killZombie(Survivor survivor) {
