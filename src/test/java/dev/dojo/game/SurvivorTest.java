@@ -72,6 +72,25 @@ public class SurvivorTest {
     }
 
     @Test
+    void survivorShouldNotLevelUpWhenReaches6Xp() {
+        Survivor survivor = new Survivor.Builder()
+                .setName("Michel")
+                .setNumberOfActionsPerTurn(3)
+                .setMaxNbWoundBeforeDie(3)
+                .setMaxNbEquipments(2)
+                .setMaxNbEquipmentsInHand(2)
+                .setXp(5)
+                .setLevel(Level.BLUE)
+                .build();
+
+        Assertions.assertEquals(Level.BLUE, survivor.getLevel());
+
+        survivor.killZombie(1);
+
+        Assertions.assertEquals(Level.BLUE, survivor.getLevel());
+    }
+
+    @Test
     void survivorShouldLevelUpToYellowWhenExceeds6Xp() {
         Survivor survivor = new Survivor.Builder()
                 .setName("Michel")
@@ -82,6 +101,27 @@ public class SurvivorTest {
                 .setXp(6)
                 .setLevel(Level.BLUE)
                 .build();
+
+        Assertions.assertEquals(Level.BLUE, survivor.getLevel());
+
+        survivor.killZombie(1);
+
+        Assertions.assertEquals(Level.YELLOW, survivor.getLevel());
+    }
+
+    @Test
+    void survivorShouldNotLevelUpToOrangeWhenReaches18Xp() {
+        Survivor survivor = new Survivor.Builder()
+                .setName("Michel")
+                .setNumberOfActionsPerTurn(3)
+                .setMaxNbWoundBeforeDie(3)
+                .setMaxNbEquipments(2)
+                .setMaxNbEquipmentsInHand(2)
+                .setXp(17)
+                .setLevel(Level.YELLOW)
+                .build();
+
+        Assertions.assertEquals(Level.YELLOW, survivor.getLevel());
 
         survivor.killZombie(1);
 
@@ -99,6 +139,25 @@ public class SurvivorTest {
                 .setXp(18)
                 .setLevel(Level.YELLOW)
                 .build();
+
+        survivor.killZombie(1);
+
+        Assertions.assertEquals(Level.ORANGE, survivor.getLevel());
+    }
+
+    @Test
+    void survivorShouldNotLevelUpToRedWhenReaches42Xp() {
+        Survivor survivor = new Survivor.Builder()
+                .setName("Michel")
+                .setNumberOfActionsPerTurn(3)
+                .setMaxNbWoundBeforeDie(3)
+                .setMaxNbEquipments(2)
+                .setMaxNbEquipmentsInHand(2)
+                .setXp(41)
+                .setLevel(Level.ORANGE)
+                .build();
+
+        Assertions.assertEquals(Level.ORANGE, survivor.getLevel());
 
         survivor.killZombie(1);
 

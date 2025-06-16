@@ -3,7 +3,8 @@ package dev.dojo.game;
 public enum Level {
     BLUE(6),
     YELLOW(18),
-    ORANGE(42), RED(Integer.MAX_VALUE);
+    ORANGE(42),
+    RED(Integer.MAX_VALUE);
 
     private final int maxXp;
 
@@ -35,11 +36,15 @@ public enum Level {
     public static Level getLevelFromNbXp(int nbXp) {
         Level finalLevel = initialLevel();
         for (Level level : values()) {
-            if (nbXp < level.getMaxXp()) {
+            if (nbXp <= level.getMaxXp()) {
                 break;
             }
             finalLevel = level.getNextLevel();
         }
         return finalLevel;
+    }
+
+    public static Level clone(Level level) {
+        return Level.valueOf(level.name());
     }
 }

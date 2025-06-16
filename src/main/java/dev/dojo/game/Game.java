@@ -11,10 +11,12 @@ public class Game {
     private List<Survivor> survivors;
     private boolean isFinished;
     private int turn;
+    private History history;
 
     public Game(SurvivorValidator survivorValidator) {
         this.survivorValidator = survivorValidator;
         this.isFinished = false;
+        this.history = new History();
         turn = 0;
     }
 
@@ -36,6 +38,13 @@ public class Game {
     public void addSurvivor(Survivor survivor) {
         if (survivorValidator.survivorValid(survivor, getSurvivors())) {
             this.getSurvivors().add(survivor);
+            this.getHistory().addEvent("The survivor " + survivor.getName() + " has been added");
+        }
+    }
+
+    public void lootEquipment(Survivor survivor, Equipment equipment) {
+        if (survivor.addEquipment(equipment)) {
+            getHistory().addEvent("The survivor " + survivor.getName() + " get an equipment : " + equipment.getName());
         }
     }
 
@@ -53,8 +62,12 @@ public class Game {
 
     public void hurtSurvivor(Survivor survivor){
         survivor.addWound();
-        if (checkIfAllSurvivorsDied()){
-            finish();
+        getHistory().addEvent("The survivor " + survivor.getName() + " got hurted");
+        if (!survivor.isAlive()) {
+            getHistory().addEvent("The survivor " + survivor.getName() + " died");
+            if (checkIfAllSurvivorsDied()){
+                finish();
+            }
         }
     }
 
@@ -63,6 +76,18 @@ public class Game {
     }
 
     public void killZombie(Survivor survivor) {
+        Level levelBefore = Level.clone(survivor.getLevel());
         survivor.killZombie(NB_XP_GAINED_WHEN_KILL_ZOMBIE);
+        if (levelBefore.ordinal() < survivor.getLevel().ordinal()) {
+            getHistory().addEvent("The survivor " + survivor.getName() + " has leveled up to " + survivor.getLevel().name());
+        }
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 }
